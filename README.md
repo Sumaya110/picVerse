@@ -26,7 +26,7 @@
 
 - Image Privacy: Mark images as private (visible only to the user) or public (visible to others).
 
-- Image Storage: Store full-resolution images in cloud storage (AWS S3, Firebase, or Cloudinary ).Generate compressed versions for display.
+- Image Storage: Store full-resolution images in public folder. Generate compressed versions for display.
 
 - Image Download: Users can download the original full-resolution image (if have access).
 
