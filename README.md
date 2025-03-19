@@ -239,6 +239,32 @@
 200 OK
 ```
 
+## 5. Delet a User
+
+*Endpoint:*
+
+```
+  Method: DELETE
+  Type: RAW
+  URL: http://localhost:3000/api/users/:id
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of item to fetch |
+
+
+
+#### Example Response: success
+{
+    "status": 200,
+    "msg": "User deleted successfully"
+}
+
+#### Status Code: 
+``` 
+200 OK
+```
+
 
 ## 6. Update a User
 
