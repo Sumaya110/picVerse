@@ -101,7 +101,7 @@ console.log("userId", userId);
 
 const user = await prisma.user.findUnique({
   where: {
-    id: Number(userId), // converting to number from string
+    id: userId,
   },
 });
 
