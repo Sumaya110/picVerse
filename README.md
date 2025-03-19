@@ -12,17 +12,15 @@
 
     - View own and others' public profiles.
 
-- Account Security:
+- Account Security: JWT-based authentication for secure access.
 
-    - JWT-based authentication for secure access.
-
-    - Logout functionality.
+- Logout functionality.
 
 ##  Image Upload & Management
 
 - Upload Images:
     - Users can upload images
-    - Images exceeding 20MB are compressed for preview.
+    - Images exceeding 1MB are compressed for preview. Compressed to 200kb-300kb.
 
 - Image Privacy: Mark images as private (visible only to the user) or public (visible to others).
 
@@ -30,7 +28,7 @@
 
 - Image Download: Users can download the original full-resolution image (if have access).
 
-## User Engagement & Rating System
+## User Engagement & Rating System (Rating is optinal)
 
 - Like (Love) Feature:
 
@@ -56,7 +54,7 @@
 
     - Users can view their own profile (private + public images).
 
-    - Visiting another user's profile shows only public images.
+    - Visiting another user's profile shows only public images & share with you pictures
 
 ## Image Optimization & Performance
 
@@ -73,5 +71,172 @@
 
     - Notify users when their images are liked/shared.
 
-    - Notify users of new chat messages.
+    - Notify users of new chat messages. (chat is optional)
+
+
+
+# API endpoints
+
+## 1. User Register
+
+
+*Endpoint:*
+
+```http
+  Method: POST
+  Type: RAW
+  URL: http://localhost:3000/api/auth/signup
+```
+
+*Body:*
+
+```
+{
+    "username": "jahan",
+    "email": "jahan@gmail.com",
+    "password": "pass1234"
+}
+
+```
+
+#### Example Response: success
+```
+{
+    "status": 201,
+    "data": {
+        "id": "35553e59-b216-4375-8eb5-5b82c07fc9d5",
+        "username": "sumaya",
+        "email": "sumaya@gmail.com",
+        "password": "$2b$10$aKwhP.wzoA3K0KkN1gPphezB6iVD5KCTtpDTtRdfH83MZbEctqIzK",
+        "profilePic": null,
+        "bio": null,
+        "createdAt": "2025-03-19T07:52:51.317Z",
+        "rating": 0
+    },
+    "msg": "User created"
+}
+
+```
+
+#### Status Code: 
+``` 
+201 Created
+```
+
+
+## 2. User Login
+
+*Endpoint:*
+
+```http
+  Method: POST
+  Type: RAW
+  URL: http://localhost:3000/api/auth/login
+```
+
+*Body:*
+
+```
+{
+    "email": "jahan@gmail.com",
+    "password": "pass1234"
+}
+
+```
+
+#### Example Response: success
+```
+{
+    "message": "Login successful",
+    "token": "eyJh......."
+}
+
+```
+
+#### Status Code: 
+``` 
+200 OK
+```
+
+
+
+
+## 3. Get All Users
+
+*Endpoint:*
+
+```
+  Method: GET
+  URL: http://localhost:3000/api/users/
+```
+
+
+#### Example Response: success
+```
+{
+    "status": "success",
+    "data": [
+        {
+            "id": "b63bf299-3ddf-4b84-9968-7331acea6d52",
+            "username": "sumayaJahan",
+            "email": "jahan@gmail.com",
+            "bio": "sumayaJahan's bio",
+            "profilePic": null
+        },
+        {
+            "id": "35553e59-b216-4375-8eb5-5b82c07fc9d5",
+            "username": "sumaya",
+            "email": "sumaya@gmail.com",
+            "bio": null,
+            "profilePic": null
+        }
+    ]
+}
+
+```
+
+#### Status Code: 
+``` 
+200 OK
+```
+
+
+
+
+
+## 4. Get single User
+
+*Endpoint:*
+
+```
+  Method: GET
+  URL: http://localhost:3000/api/users/:id
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of item to fetch |
+
+#### Example Response: success
+```
+{
+    "status": 200,
+    "data": {
+        "id": "b63bf299-3ddf-4b84-9968-7331acea6d52",
+        "username": "sumayaJahan",
+        "email": "jahan@gmail.com",
+        "password": "$2b$10$w7eJ22s.HxW5aS0fUAqXI.cB/HQgM2O1jMpKdWj6zwksZngujf75i",
+        "profilePic": null,
+        "bio": "sumayaJahan's bio",
+        "createdAt": "2025-03-19T04:17:11.748Z",
+        "rating": 0
+    }
+}
+
+```
+
+#### Status Code: 
+``` 
+200 OK
+```
+
 
