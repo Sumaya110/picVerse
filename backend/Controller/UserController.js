@@ -3,28 +3,65 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export const createUser = async (req, res) => {
-  console.log("hello");
-  
+  console.log("Uploading image...");
+
   try {
     const { username, email, password } = req.body;
-
+    
+    // Check if the user already exists
     const findUser = await prisma.user.findUnique({ where: { email } });
     if (findUser)
       return res.status(400).json({ message: "Email already taken." });
 
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    // If an image is uploaded, use its path; otherwise, set a default image
+    const profilePic = req.file
+      ? `/uploads/images/${req.file.filename}`
+      : "/uploads/images/default-profile.png";
+
     const newUser = await prisma.user.create({
-      data: { username, email, password: hashedPassword },
+      data: {
+        username,
+        email,
+        password: hashedPassword,
+        profilePic, // Store image path
+      },
     });
 
     return res
       .status(201)
-      .json({ status: 201, data: newUser, msg: "User created" });
+      .json({ status: 201, data: newUser, msg: "User created successfully" });
   } catch (error) {
     console.error("Error creating user:", error);
     return res.status(500).json({ message: "Server error", error });
   }
 };
+
+
+// export const createUser = async (req, res) => {
+//   console.log("hello");
+  
+//   try {
+//     const { username, email, password } = req.body;
+
+//     const findUser = await prisma.user.findUnique({ where: { email } });
+//     if (findUser)
+//       return res.status(400).json({ message: "Email already taken." });
+
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     const newUser = await prisma.user.create({
+//       data: { username, email, password: hashedPassword },
+//     });
+
+//     return res
+//       .status(201)
+//       .json({ status: 201, data: newUser, msg: "User created" });
+//   } catch (error) {
+//     console.error("Error creating user:", error);
+//     return res.status(500).json({ message: "Server error", error });
+//   }
+// };
 
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
