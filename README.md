@@ -240,3 +240,49 @@
 ```
 
 
+## 6. Update a User
+
+*Endpoint:*
+
+```
+  Method: PUT
+  Type: RAW
+  URL: http://localhost:3000/api/users/:id
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of item to fetch |
+
+
+*Body:*
+
+```
+{
+    "username": "sumayaJahan",
+    "email": "jahan@gmail.com",
+    "bio": "sumayaJahan's bio"
+}
+
+```
+
+#### Example Response: success
+```
+{
+    "status": 200,
+    "message": "User updated successfully"
+}
+
+```
+
+#### Status Code: 
+``` 
+200 OK
+```
+
+
+{
+    "status": 200,
+    "msg": "User deleted successfully"
+}
+
+
