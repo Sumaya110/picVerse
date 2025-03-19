@@ -7,8 +7,7 @@ export const createUser = async (req, res) => {
 
   try {
     const { username, email, password } = req.body;
-    
-    // Check if the user already exists
+
     const findUser = await prisma.user.findUnique({ where: { email } });
     if (findUser)
       return res.status(400).json({ message: "Email already taken." });
@@ -25,7 +24,7 @@ export const createUser = async (req, res) => {
         username,
         email,
         password: hashedPassword,
-        profilePic, // Store image path
+        profilePic,
       },
     });
 
@@ -37,31 +36,6 @@ export const createUser = async (req, res) => {
     return res.status(500).json({ message: "Server error", error });
   }
 };
-
-
-// export const createUser = async (req, res) => {
-//   console.log("hello");
-  
-//   try {
-//     const { username, email, password } = req.body;
-
-//     const findUser = await prisma.user.findUnique({ where: { email } });
-//     if (findUser)
-//       return res.status(400).json({ message: "Email already taken." });
-
-//     const hashedPassword = await bcrypt.hash(password, 10);
-//     const newUser = await prisma.user.create({
-//       data: { username, email, password: hashedPassword },
-//     });
-
-//     return res
-//       .status(201)
-//       .json({ status: 201, data: newUser, msg: "User created" });
-//   } catch (error) {
-//     console.error("Error creating user:", error);
-//     return res.status(500).json({ message: "Server error", error });
-//   }
-// };
 
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
@@ -104,7 +78,7 @@ export const updateUser = async (req, res) => {
     data: {
       username,
       bio,
-      profilePic
+      profilePic,
     },
   });
 
@@ -118,41 +92,40 @@ export const fetchUsers = async (req, res) => {
         id: true,
         username: true,
         email: true,
-        bio: true,  
-        profilePic: true,  
+        bio: true,
+        profilePic: true,
       },
     });
 
     return res.status(200).json({ status: "success", data: users });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ status: "error", message: "Failed to fetch users" });
+    return res
+      .status(500)
+      .json({ status: "error", message: "Failed to fetch users" });
   }
 };
 
-
-// * Show user
 export const showUser = async (req, res) => {
-const userId = req.params.id;
-console.log("userId", userId);
+  const userId = req.params.id;
+  console.log("userId", userId);
 
-const user = await prisma.user.findUnique({
-  where: {
-    id: userId,
-  },
-});
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
 
-return res.json({ status: 200, data: user });
+  return res.json({ status: 200, data: user });
 };
 
-// * Delete user
 export const deleteUser = async (req, res) => {
-const userId = req.params.id;
-await prisma.user.delete({
-  where: {
-    id:userId,
-  },
-});
+  const userId = req.params.id;
+  await prisma.user.delete({
+    where: {
+      id: userId,
+    },
+  });
 
-return res.json({ status: 200, msg: "User deleted successfully" });
+  return res.json({ status: 200, msg: "User deleted successfully" });
 };

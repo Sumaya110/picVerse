@@ -4,8 +4,7 @@ import upload from "../middlewares/upload.js";
 
 const router = Router();
 
-// router.post("/signup", createUser);
-router.post("/signup",upload.single("profilePic"), createUser);
+router.post("/signup", upload.single("profilePic"), createUser);
 router.post("/login", loginUser);
 
 export default router;
