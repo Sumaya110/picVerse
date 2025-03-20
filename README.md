@@ -85,7 +85,7 @@
 ```
   Method: POST
   Type: RAW
-  URL: http://localhost:3000/api/auth/signup
+  URL: http://localhost:4000/api/auth/signup
 ```
 
 *Body:*
