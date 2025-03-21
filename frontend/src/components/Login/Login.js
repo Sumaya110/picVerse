@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styles from "@/components/Login/Login.module.css";
 import { useRouter } from "next/navigation";
 import { AuthContext } from "@/context/AuthContext";
@@ -19,9 +19,7 @@ const Login = () => {
     };
 
     try {
-     const response= await login(formData.email, formData.password);
-     console.log("response ",response);
-     localStorage.setItem("user", response.user);
+      const response = await login(formData.email, formData.password);
 
       router.push("/profile");
       setError(null);
@@ -29,41 +27,6 @@ const Login = () => {
       setError(error.message || "An error occurred, please try again.");
     }
   };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   const formData = {
-  //     email: e.target.email.value,
-  //     password: e.target.password.value,
-  //   };
-
-  //   console.log(formData);
-
-  //   try {
-  //     const response = await fetch("http://localhost:4000/api/auth/login", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(formData),
-  //     });
-
-  //     const data = await response.json();
-
-  //     console.log("response  : ", response);
-
-  //     if (response.ok) {
-  //       localStorage.setItem("token", data.token);
-  //       router.push("/profile");
-  //       setError(null);
-  //     } else {
-  //       setError(data.message || "An error occurred, please try again.");
-  //     }
-  //   } catch (error) {
-  //     setError("Something went wrong. Please try again.");
-  //   }
-  // };
 
   return (
     <div className={styles["login-form-wrapper"]}>

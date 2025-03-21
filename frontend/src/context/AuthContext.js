@@ -16,8 +16,6 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const userData = await loginUser(email, password);
-      console.log("userData from context", userData);
-
       if (!userData.token)
         throw new Error("Invalid login response. No token received.");
 
@@ -28,6 +26,7 @@ export const AuthProvider = ({ children }) => {
 
       setUser(userProfile);
       localStorage.setItem("user", JSON.stringify(userProfile));
+      const storedUser = localStorage.getItem("user");
 
       return userProfile;
     } catch (error) {
