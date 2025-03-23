@@ -2,6 +2,8 @@ import express from "express";
 import "dotenv/config";
 import path from "path";
 import cors from 'cors';
+import uploadRoute from './routes/upload.js';
+
 
 const app = express();
 app.use(express.json());
@@ -11,6 +13,8 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
+
+app.use('/api', uploadRoute);
 
 app.get("/", (req, res) => {
   console.log("hello");
