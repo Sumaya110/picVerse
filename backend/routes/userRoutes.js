@@ -11,7 +11,8 @@ import {
 const router = Router();
 
 router.get("/profile", verifyToken, (req, res) => {
-  res.json({ message: "Profile Page", user: req.user });
+  const { userId, email } = req.user;
+  res.json({ userId, email });
 });
 
 

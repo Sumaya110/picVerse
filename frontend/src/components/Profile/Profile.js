@@ -4,18 +4,21 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import { fetchUserById } from "@/services/auth";
 import Image from "next/image";
-import styles from "./Profile.module.css"; // ✅ Fixed import
+import styles from "./Profile.module.css"; 
 
 const Profile = () => {
   const { logout } = useContext(AuthContext);
-  const [user, setUser] = useState(null); // ✅ Changed initial state to null
+  const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    console.log("user  ")
     const fetchUser = async () => {
       try {
         const storedUser = JSON.parse(localStorage.getItem("user"));
         const token = localStorage.getItem("token");
+
+        console.log("stored user  & token  :: ", storedUser, "  ", token );
 
         if (!storedUser?.userId || !token) return;
 
@@ -31,38 +34,34 @@ const Profile = () => {
     fetchUser();
   }, []);
 
-  if (!user) return <p>Loading profile...</p>; // ✅ Improved condition
+  if (!user) return <p>Loading profile...</p>;
 
   return (
     <div>
-      <h2>Profile</h2>
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <div className={styles["cover-picture-container"]}>
-        <Image
-          src="http://localhost:4000/uploads/images/default-profile.png"
-          alt="Profile"
-          width={150}
-          height={150}
-          unoptimized={true}
-        />
 
-        <div>
+        <div >
           <Image
-            src="http://localhost:4000/uploads/images/default-profile.png"
+            src="/default-profile.png"
             alt="Profile"
             width={150}
             height={150}
             unoptimized={true}
+            priority={true}
           />
         </div>
-      </div>
+
 
       <p>
         <strong>Username:</strong> {user.username}
       </p>
+      
       <p>
         <strong>Email:</strong> {user.email}
+      </p>
+      <p>
+        <strong>Bio:</strong> {user.bio}
       </p>
     </div>
   );

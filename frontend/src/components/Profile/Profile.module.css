@@ -1,27 +1,8 @@
-.cover-picture-container {
-  position: relative;
-}
 
-.profile-picture {
-  position: absolute;
-  top: 96%;
-  left: 15%;
-  transform: translate(-50%, -50%);
-  height: 150px;
-  width: 150px;
-  border-radius: 50%;
-  border: 5px solid white;
-  z-index: 1;
-}
 
-.cover-picture {
-  height: 220px;
-  width: 100%;
-}
-
-.profile-picture-overlay {
+/* .profile-picture {
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-}
+} */
