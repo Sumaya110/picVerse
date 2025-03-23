@@ -1,8 +1,7 @@
-"use client"
+"use client";
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import { fetchUserById, updateUser } from "@/services/auth";
-import Image from "next/image";
 import styles from "./Profile.module.css";
 import EditProfileModal from "@/components/EditProfileModal/EditProfileModal";
 
@@ -31,9 +30,9 @@ const Profile = () => {
 
   const handleProfileUpdate = async (updatedData) => {
     try {
+      const storedUser = JSON.parse(localStorage.getItem("user"));
       const updatedUser = await updateUser(storedUser?.userId, updatedData);
-      setUser(updatedUser.data);
-      setIsEditing(false);
+      setUser(updatedUser);
     } catch (error) {
       console.error("Error updating profile:", error);
     }
@@ -42,33 +41,43 @@ const Profile = () => {
   if (!user) return <p>Loading profile...</p>;
 
   return (
-    <div>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <div className={styles.profileHeader}>
-        <Image
-          src={user.profilePicture || "/default-profile.png"}
-          alt="Profile"
-          width={150}
-          height={150}
-          className={styles.profileImage}
-          priority
-        />
-        <button onClick={() => setIsEditing(true)} className={styles.editButton}>
+    <div className={styles["profile-wrapper"]}>
+      <div>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <div className={styles.profileHeader}>
+          <div className={styles["profile-pic-wrapper"]}>
+            <img
+              src={user.profilePic || "/default-profile.png"}
+              alt="Profile"
+              className={styles["profile-picture"]}
+              priority
+            />
+          </div>
+        </div>
+        <p className={styles.profileText}>
+          <strong>Username:</strong> {user.username}
+        </p>
+        <p className={styles.profileText}>
+          <strong>Email:</strong> {user.email}
+        </p>
+        <p className={styles.profileText}>
+          <strong>Bio:</strong> {user.bio}
+        </p>
+
+        <button
+          onClick={() => setIsEditing(true)}
+          className={styles.editButton}
+        >
           Edit Profile
         </button>
+        {isEditing && (
+          <EditProfileModal
+            user={user}
+            onClose={() => setIsEditing(false)}
+            onSave={handleProfileUpdate}
+          />
+        )}
       </div>
-      <p>
-        <strong>Username:</strong> {user.username}
-      </p>
-      <p>
-        <strong>Email:</strong> {user.email}
-      </p>
-      <p>
-        <strong>Bio:</strong> {user.bio}
-      </p>
-      {isEditing && (
-        <EditProfileModal user={user} onClose={() => setIsEditing(false)} onSave={handleProfileUpdate} />
-      )}
     </div>
   );
 };

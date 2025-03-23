@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import Image from "next/image";
 import styles from "./EditProfileModal.module.css";
 import { AiOutlineClose } from "react-icons/ai";
 import { TbCameraPlus } from "react-icons/tb";
@@ -9,7 +8,7 @@ const EditProfileModal = ({ user, onClose, onSave }) => {
   const [username, setUsername] = useState(user.username);
   const [bio, setBio] = useState(user.bio);
   const [profilePic, setProfilePic] = useState(
-    user.profilePicture || "/default-profile.png"
+    user.profilePic || "/default-profile.png"
   );
   const [selectedProPic, setSelectedProPic] = useState(null);
 
@@ -32,21 +31,20 @@ const EditProfileModal = ({ user, onClose, onSave }) => {
 
     if (profilePic) {
       formData.append("file", profilePic);
-      console.log("Form data", formData, profilePic);
     }
 
     try {
       const response = await fetch("http://localhost:4000/api/upload", {
         method: "POST",
-        body: formData, 
+        body: formData,
       });
 
       const result = await response.json();
       if (response.ok) {
         onSave({
-          name: username, 
+          username,
           bio,
-          profilePicture: result.filePath, 
+          profilePic: result.filePath,
         });
         onClose();
       } else {
@@ -58,14 +56,17 @@ const EditProfileModal = ({ user, onClose, onSave }) => {
   };
 
   return (
-    <div className={styles.modalOverlay} onClick={onClose}>
-      <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-        <AiOutlineClose className={styles.closeIcon} onClick={onClose} />
+    <div className={styles["modal-overlay"]} onClick={onClose}>
+      <div
+        className={styles["modal-content"]}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <AiOutlineClose className={styles["close-icon"]} onClick={onClose} />
         <h2>Edit Profile</h2>
 
-        <div className={styles.imageUploadContainer}>
-          <label htmlFor="profilePic" className={styles.imageUploadLabel}>
-            <TbCameraPlus className={styles.uploadIcon} />
+        <div className={styles["image-upload-container"]}>
+          <label htmlFor="profilePic" className={styles["image-upload-label"]}>
+            <TbCameraPlus className={styles["upload-icon"]} />
           </label>
           <input
             id="profilePic"
@@ -74,27 +75,23 @@ const EditProfileModal = ({ user, onClose, onSave }) => {
             onChange={handleImageChange}
           />
           {selectedProPic ? (
-            <div
-              >
-              {" "}
-              <Image
+            <div>
+              <img
                 src={selectedProPic}
                 alt="Profile"
-                width={150}
-                height={150}
-                className={styles.profileImage}
-              />{" "}
+                className={styles["profile-picture"]}
+              />
             </div>
-          ) : (<Image
-            src={profilePic}
-            alt="Profile"
-            width={150}
-            height={150}
-            className={styles.profileImage}
-          />)}
+          ) : (
+            <img
+              src={user.profilePic}
+              alt="Profile"
+              className={styles["profile-picture"]}
+            />
+          )}
         </div>
 
-        <div className={styles.inputGroup}>
+        <div className={styles["input-group"]}>
           <label>Username</label>
           <input
             type="text"
@@ -103,7 +100,7 @@ const EditProfileModal = ({ user, onClose, onSave }) => {
           />
         </div>
 
-        <div className={styles.inputGroup}>
+        <div className={styles["input-group"]}>
           <label>Bio</label>
           <textarea
             value={bio || ""}
@@ -111,7 +108,7 @@ const EditProfileModal = ({ user, onClose, onSave }) => {
           />
         </div>
 
-        <button className={styles.saveButton} onClick={handleSave}>
+        <button className={styles["save-button"]} onClick={handleSave}>
           Save Changes
         </button>
       </div>

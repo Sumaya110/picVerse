@@ -85,3 +85,26 @@ export const fetchAllUsers = async (token) => {
     throw error;
   }
 };
+
+export const updateUser = async (userId, updatedData) => {
+  try {
+    const res = await fetch(`http://localhost:4000/api/users/${userId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedData),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message || `Error updating user: ${res.status}`);
+    }
+
+    return data.user;
+  } catch (error) {
+    console.error("Error updating user:", error);
+    throw error;
+  }
+};

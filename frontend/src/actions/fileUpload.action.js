@@ -1,15 +1,13 @@
-import express from "express";
 import formidable from "formidable";
 import fs from "fs";
 import path from "path";
 
-const router = express.Router();
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 router.post("/upload", (req, res) => {
   const form = formidable();
 
-  form.uploadDir = path.join(__dirname, "../uploads/images");
+  form.uploadDir = path.join(__dirname, "../public/images");
   form.keepExtensions = true;
 
   form.parse(req, (err, fields, files) => {
@@ -24,7 +22,7 @@ router.post("/upload", (req, res) => {
       return res.status(400).json({ error: "No file uploaded" });
     }
 
-    const filePath = `${process.env.SERVER_URL}/uploads/images/${file.originalFilename}`;
+    const filePath = `/images/${file.originalFilename}`;
 
     fs.rename(
       file.filepath,

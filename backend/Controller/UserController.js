@@ -37,7 +37,6 @@ export const createUser = async (req, res) => {
   }
 };
 
-
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -69,21 +68,39 @@ export const loginUser = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-  const userId = req.params.id;
-  const { username, bio, profilePic } = req.body;
+  try {
+    const userId = req.params.id;
+    const { username, bio, profilePic } = req.body;
 
-  await prisma.user.update({
-    where: {
-      id: userId,
-    },
-    data: {
-      username,
-      bio,
-      profilePic,
-    },
-  });
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        username,
+        bio,
+        profilePic,
+      },
+      select: {
+        id: true,
+        username: true,
+        bio: true,
+        profilePic: true,
+        email: true,
+      },
+    });
 
-  return res.json({ status: 200, message: "User updated successfully" });
+    return res.json({
+      status: 200,
+      message: "User updated successfully",
+      user: updatedUser,
+    });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    return res
+      .status(500)
+      .json({ status: 500, message: "Internal server error" });
+  }
 };
 
 export const fetchUsers = async (req, res) => {
