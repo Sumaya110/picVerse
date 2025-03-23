@@ -5,13 +5,10 @@ dotenv.config();
 
 export const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization || req.headers.Authorization;
-
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res.status(401).json({ message: "No token, authorization denied" });
   }
-
   const token = authHeader.split(" ")[1];
-
   if (!token) {
     return res
       .status(401)
@@ -20,17 +17,13 @@ export const verifyToken = (req, res, next) => {
 
   try {
     const secretKey = process.env.SECRET_KEY;
-
-
     if (!secretKey) {
       return res
         .status(500)
         .json({ message: "Internal Server Error: SECRET_KEY is missing" });
     }
-
     const decoded = jwt.verify(token, secretKey);
     req.user = decoded;
-
     next();
   } catch (error) {
     console.error("JWT Verification Error:", error);

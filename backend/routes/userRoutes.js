@@ -5,7 +5,6 @@ import {
   fetchUsers,
   showUser,
   deleteUser,
-  // getProfile,
 } from "../Controller/UserController.js";
 
 const router = Router();
@@ -14,8 +13,6 @@ router.get("/profile", verifyToken, (req, res) => {
   const { userId, email } = req.user;
   res.json({ userId, email });
 });
-
-
 
 router.put("/:id", updateUser);
 router.get("/", fetchUsers);

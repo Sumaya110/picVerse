@@ -14,10 +14,9 @@ export const createUser = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // If an image is uploaded, use its path; otherwise, set a default image
     const profilePic = req.file
       ? `/uploads/images/${req.file.filename}`
-      : "/uploads/images/default-profile.png";
+      : `${process.env.SERVER_URL}/uploads/images/default-profile.png`;
 
     const newUser = await prisma.user.create({
       data: {

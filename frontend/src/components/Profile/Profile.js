@@ -20,6 +20,7 @@ const Profile = () => {
         if (!storedUser?.userId || !token) return;
 
         const userData = await fetchUserById(storedUser.userId, token);
+        console.log(userData.data?.profilePic, userData.data)
         setUser(userData.data);
       } catch (error) {
         setError(error.message);
@@ -47,10 +48,9 @@ const Profile = () => {
         <div className={styles.profileHeader}>
           <div className={styles["profile-pic-wrapper"]}>
             <img
-              src={user.profilePic || "/default-profile.png"}
+              src={user?.profilePic || "/default-profile.png"}
               alt="Profile"
               className={styles["profile-picture"]}
-              priority
             />
           </div>
         </div>
