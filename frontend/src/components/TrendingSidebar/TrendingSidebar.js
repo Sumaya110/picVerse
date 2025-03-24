@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { FiSearch } from "react-icons/fi";
 import styles from "@/components/TrendingSidebar/TrendingSidebar.module.css";
+import FollowUser from "@/components/TopUser/TopUser";
 import { searchUser } from "@/services/auth";
-import TopUser from "@/components/TopUser/TopUser";
 
 const TrendingSidebar = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResult, setSearchResult] = useState("");
   const [topUsers, setTopUsers] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchTopUsers = async () => {
@@ -29,8 +30,9 @@ const TrendingSidebar = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await searchUser(searchQuery);
-      setSearchResults(response.data);
+      const res = await searchUser(searchQuery);
+      setSearchResult(res);
+      setShowModal(true);
     } catch (error) {
       console.error("Error searching users:", error);
     }
@@ -40,6 +42,10 @@ const TrendingSidebar = () => {
     if (e.key === "Enter") {
       handleSearch();
     }
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -56,18 +62,29 @@ const TrendingSidebar = () => {
         />
       </div>
 
-      {searchQuery && searchResults?.length > 0 && (
-        <div className={styles.resultsContainer}>
-          {searchResults?.map((user) => (
-            <TopUser key={user?.userId} user={user} />
-          ))}
+      {showModal && searchResult && (
+        <div className={styles.modalOverlay} onClick={closeModal}>
+          <div
+            className={styles.modalContent}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className={styles.modalHeader}>
+              <h3>Search Results</h3>
+              <button className={styles.closeButton} onClick={closeModal}>
+                X
+              </button>
+            </div>
+            <div className={styles.resultsContainer}>
+              <FollowUser key={searchResult?.userId} user={searchResult} />
+            </div>
+          </div>
         </div>
       )}
 
       <div className={styles.topUsersContainer}>
-        <h2> Top Users</h2>
+        <h2>Top Users</h2>
         {topUsers.map((user, index) => (
-          <TopUser key={user?.userId || index} user={user} />
+          <FollowUser key={user?.userId || index} user={user} />
         ))}
       </div>
     </div>
