@@ -108,3 +108,52 @@ export const updateUser = async (userId, updatedData) => {
     throw error;
   }
 };
+
+export const searchUser = async (username) => {
+  try {
+    const res = await fetch(
+      `http://localhost:4000/api/users/search/${username}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const data = await res.json();
+    console.log("dataaa  :: ", data.data);
+
+    if (!res.ok) {
+      throw new Error(data.message || `Error fetching user: ${res.status}`);
+    }
+
+    return data.data;
+  } catch (error) {
+    console.error("Error searching for user:", error);
+    throw error;
+  }
+};
+
+export const showUser = async (userId) => {
+  try {
+    const res = await fetch(`http://localhost:4000/api/users/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await res.json();
+    console.log("User data: ", data);
+
+    if (!res.ok) {
+      throw new Error(data.message || `Error fetching user: ${res.status}`);
+    }
+
+    return data.data;
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    throw error;
+  }
+};

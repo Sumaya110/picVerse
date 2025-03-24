@@ -5,6 +5,7 @@ import { fetchUserById, updateUser } from "@/services/auth";
 import styles from "./Profile.module.css";
 import EditProfileModal from "@/components/EditProfileModal/EditProfileModal";
 import Sidebar from "../Sidebar/Sidebar";
+import TrendingSidebar from "../TrendingSidebar/TrendingSidebar";
 
 const Profile = () => {
   const { logout } = useContext(AuthContext);
@@ -81,6 +82,7 @@ const Profile = () => {
           )}
         </div>
       </div>
+      <TrendingSidebar />
     </div>
   );
 };

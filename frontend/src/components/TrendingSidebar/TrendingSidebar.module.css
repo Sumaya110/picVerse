@@ -1,0 +1,42 @@
+.trendingSidebar {
+  width: 360px;
+  padding: 1rem;
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  background-color: #222;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+}
+
+.searchIcon {
+  margin-right: 10px;
+  color: #bbb;
+}
+
+.searchInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+}
+
+.resultsContainer {
+  margin-top: 1rem;
+  background-color: #333;
+  border-radius: 10px;
+  padding: 0.5rem;
+}
+
+.topUsersContainer {
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 1000px) {
+  .trendingSidebar {
+    display: none;
+  }
+}
