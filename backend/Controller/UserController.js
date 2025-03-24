@@ -3,8 +3,6 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export const createUser = async (req, res) => {
-  console.log("Uploading image...");
-
   try {
     const { username, email, password } = req.body;
 
@@ -38,8 +36,6 @@ export const createUser = async (req, res) => {
 
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
-
-  // Check if user exists
   const user = await prisma.user.findUnique({
     where: { email },
   });
@@ -47,14 +43,10 @@ export const loginUser = async (req, res) => {
   if (!user) {
     return res.status(400).json({ message: "Invalid email or password" });
   }
-
-  // Compare entered password with stored hash
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
     return res.status(400).json({ message: "Invalid email or password" });
   }
-
-  // Generate JWT token
   const token = jwt.sign(
     { userId: user.id, email: user.email },
     process.env.SECRET_KEY,
@@ -125,8 +117,6 @@ export const fetchUsers = async (req, res) => {
 
 export const showUser = async (req, res) => {
   const userId = req.params.id;
-  console.log("userId", userId);
-
   const user = await prisma.user.findUnique({
     where: {
       id: userId,
@@ -134,6 +124,32 @@ export const showUser = async (req, res) => {
   });
 
   return res.json({ status: 200, data: user });
+};
+
+export const searchUser = async (req, res) => {
+  try {
+    const { username } = req.params;
+    if (!username) {
+      return res
+        .status(400)
+        .json({ status: 400, message: "Username is required." });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { username: username },
+    });
+
+    if (!user) {
+      return res.status(404).json({ status: 404, message: "User not found." });
+    }
+
+    return res.status(200).json({ status: 200, data: user });
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    return res
+      .status(500)
+      .json({ status: 500, message: "Internal server error." });
+  }
 };
 
 export const deleteUser = async (req, res) => {
