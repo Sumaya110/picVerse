@@ -3,6 +3,7 @@ import { FiSearch } from "react-icons/fi";
 import styles from "@/components/TrendingSidebar/TrendingSidebar.module.css";
 import FollowUser from "@/components/TopUser/TopUser";
 import { searchUser } from "@/services/auth";
+import SearchedUser from "../SearchedUser/SaerchedUser";
 
 const TrendingSidebar = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -75,7 +76,7 @@ const TrendingSidebar = () => {
               </button>
             </div>
             <div className={styles.resultsContainer}>
-              <FollowUser key={searchResult?.userId} user={searchResult} />
+              <SearchedUser key={searchResult?.userId} user={searchResult} />
             </div>
           </div>
         </div>

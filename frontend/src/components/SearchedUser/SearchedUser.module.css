@@ -1,0 +1,29 @@
+.userCard {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+  }
+  
+  .userCard:hover {
+    transform: scale(1.05);
+  }
+  
+  .userImage {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .userName {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+  }
+  
