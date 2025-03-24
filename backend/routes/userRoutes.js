@@ -6,6 +6,7 @@ import {
   showUser,
   deleteUser,
   searchUser,
+  topUsers,
 } from "../Controller/UserController.js";
 
 const router = Router();
@@ -17,6 +18,7 @@ router.get("/profile", verifyToken, (req, res) => {
 
 router.put("/:id", updateUser);
 router.get("/", fetchUsers);
+router.get("/top", topUsers);
 router.get("/:id", showUser);
 router.get("/search/:username", searchUser);
 router.delete("/:id", deleteUser);

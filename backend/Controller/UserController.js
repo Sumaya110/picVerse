@@ -162,3 +162,18 @@ export const deleteUser = async (req, res) => {
 
   return res.json({ status: 200, msg: "User deleted successfully" });
 };
+
+export const topUsers = async (req, res) => {
+  try {
+    const users = await prisma.user.findMany({
+      orderBy: {
+        rating: "desc",
+      },
+      take: 5,
+    });
+
+    res.json({ status: 200, users });
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching top users" });
+  }
+};
