@@ -1,6 +1,10 @@
-.profile-wrapper {
+.profile-sidebar-wrapper {
+  margin: 0;
+  padding: 0;
   display: flex;
-  justify-content: center;
+}
+
+.profile-wrapper {
   align-items: center;
   padding: 20px;
 }

@@ -4,6 +4,7 @@ import { AuthContext } from "@/context/AuthContext";
 import { fetchUserById, updateUser } from "@/services/auth";
 import styles from "./Profile.module.css";
 import EditProfileModal from "@/components/EditProfileModal/EditProfileModal";
+import Sidebar from "../Sidebar/Sidebar";
 
 const Profile = () => {
   const { logout } = useContext(AuthContext);
@@ -20,7 +21,6 @@ const Profile = () => {
         if (!storedUser?.userId || !token) return;
 
         const userData = await fetchUserById(storedUser.userId, token);
-        console.log(userData.data?.profilePic, userData.data)
         setUser(userData.data);
       } catch (error) {
         setError(error.message);
@@ -42,41 +42,44 @@ const Profile = () => {
   if (!user) return <p>Loading profile...</p>;
 
   return (
-    <div className={styles["profile-wrapper"]}>
-      <div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        <div className={styles.profileHeader}>
-          <div className={styles["profile-pic-wrapper"]}>
-            <img
-              src={user?.profilePic || "/default-profile.png"}
-              alt="Profile"
-              className={styles["profile-picture"]}
-            />
+    <div className={styles["profile-sidebar-wrapper"]}>
+      <Sidebar />
+      <div className={styles["profile-wrapper"]}>
+        <div>
+          {error && <p style={{ color: "red" }}>{error}</p>}
+          <div className={styles.profileHeader}>
+            <div className={styles["profile-pic-wrapper"]}>
+              <img
+                src={user?.profilePic || "/default-profile.png"}
+                alt="Profile"
+                className={styles["profile-picture"]}
+              />
+            </div>
           </div>
-        </div>
-        <p className={styles.profileText}>
-          <strong>Username:</strong> {user.username}
-        </p>
-        <p className={styles.profileText}>
-          <strong>Email:</strong> {user.email}
-        </p>
-        <p className={styles.profileText}>
-          <strong>Bio:</strong> {user.bio}
-        </p>
+          <p className={styles.profileText}>
+            <strong>Username:</strong> {user.username}
+          </p>
+          <p className={styles.profileText}>
+            <strong>Email:</strong> {user.email}
+          </p>
+          <p className={styles.profileText}>
+            <strong>Bio:</strong> {user.bio}
+          </p>
 
-        <button
-          onClick={() => setIsEditing(true)}
-          className={styles.editButton}
-        >
-          Edit Profile
-        </button>
-        {isEditing && (
-          <EditProfileModal
-            user={user}
-            onClose={() => setIsEditing(false)}
-            onSave={handleProfileUpdate}
-          />
-        )}
+          <button
+            onClick={() => setIsEditing(true)}
+            className={styles.editButton}
+          >
+            Edit Profile
+          </button>
+          {isEditing && (
+            <EditProfileModal
+              user={user}
+              onClose={() => setIsEditing(false)}
+              onSave={handleProfileUpdate}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

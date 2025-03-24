@@ -1,0 +1,99 @@
+.sidebar-wrapper {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  background-color: #e9edf1;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tweetButton {
+  display: block;
+  background-color: #0d94ef;
+  color: white;
+  border: none;
+  border-radius: 40px;
+  padding: 12px 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 20px auto;
+  width: 200px;
+  transition: background 0.2s;
+}
+
+.tweetButton:hover {
+  background-color: #1a8cd8;
+  cursor: pointer;
+}
+
+.signOutDiv {
+  display: flex;
+  align-items: center;
+  padding: 10px 10px 10px 10px;
+  margin-bottom: 100px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.signOutDiv:hover {
+  background-color: #292727;
+}
+
+.userImage {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.userDetails {
+  flex-grow: 1;
+}
+
+.userDetails h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.userDetails p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #6e767d;
+}
+
+.dotsIcon {
+  font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .mainDiv {
+    width: 80px;
+  }
+
+  .sidebar {
+    align-items: center;
+  }
+
+  .tweetButton {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .signOutDiv {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .userDetails {
+    display: none;
+  }
+}

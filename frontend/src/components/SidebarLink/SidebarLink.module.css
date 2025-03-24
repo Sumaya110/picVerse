@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  gap: 0.5rem;
+  padding: 0.3rem 1rem;
+  width: auto;
+  color: #0d94ef;
+  position: relative;
+  display: inline-flex;
+}
+
+.container:hover {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+.icon {
+}
+
+.notificationCount {
+  position: absolute;
+  top: 2px;
+  right: 110px;
+  background-color: red;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  font-size: 0.75rem;
+}
+
+@media (min-width: 1280px) {
+  .hidden {
+    display: inline;
+  }
+
+  .icon {
+    margin-right: 10px;
+  }
+}
