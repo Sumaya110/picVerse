@@ -27,6 +27,7 @@
 .searchIcon {
   color: #333;
   margin-right: 10px;
+  cursor: pointer;
 }
 
 .modalOverlay {

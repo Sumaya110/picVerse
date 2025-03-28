@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "@/components/Sidebar/Sidebar.module.css";
-import SidebarLink from "@/components/SidebarLink/SidebarLink"
+import SidebarLink from "@/components/SidebarLink/SidebarLink";
 import { BsBell, BsThreeDots } from "react-icons/bs";
 import { AiFillHome, AiOutlineInbox, AiOutlineUser } from "react-icons/ai";
 import { useRouter } from "next/navigation";
@@ -21,7 +21,6 @@ const Sidebar = ({ option }) => {
         if (!storedUser?.userId || !token) return;
 
         const userData = await fetchUserById(storedUser.userId, token);
-        console.log(userData.data?.profilePic, userData.data);
         setUser(userData.data);
       } catch (error) {
         setError(error.message);

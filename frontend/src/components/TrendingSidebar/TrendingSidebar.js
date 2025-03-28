@@ -3,7 +3,7 @@ import { FiSearch } from "react-icons/fi";
 import styles from "@/components/TrendingSidebar/TrendingSidebar.module.css";
 import FollowUser from "@/components/TopUser/TopUser";
 import { searchUser } from "@/services/auth";
-import SearchedUser from "../SearchedUser/SaerchedUser";
+import SearchedUser from "../SearchedUser/SearchedUser";
 
 const TrendingSidebar = () => {
   const [searchQuery, setSearchQuery] = useState("");

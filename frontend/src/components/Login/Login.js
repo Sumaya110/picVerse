@@ -19,9 +19,8 @@ const Login = () => {
     };
 
     try {
-      const response = await login(formData.email, formData.password);
-
-      router.push("/profile");
+      const user = await login(formData.email, formData.password);
+      router.push(`/profile/${user?.userId}`);
       setError(null);
     } catch (error) {
       setError(error.message || "An error occurred, please try again.");

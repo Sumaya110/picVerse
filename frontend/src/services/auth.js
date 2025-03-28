@@ -49,13 +49,11 @@ export const fetchProfile = async (token) => {
   return res.json();
 };
 
-export const fetchUserById = async (userId) => {
+export const fetchUserById = async (profileId) => {
   try {
-    const res = await fetch(`http://localhost:4000/api/users/${userId}`, {
+    const res = await fetch(`http://localhost:4000/api/users/${profileId}`, {
       method: "GET",
     });
-
-    console.log("result  ", res);
 
     if (!res.ok) {
       throw new Error(`Error fetching user: ${res.status}`);
@@ -122,7 +120,6 @@ export const searchUser = async (username) => {
     );
 
     const data = await res.json();
-    console.log("dataaa  :: ", data.data);
 
     if (!res.ok) {
       throw new Error(data.message || `Error fetching user: ${res.status}`);
@@ -145,7 +142,6 @@ export const showUser = async (userId) => {
     });
 
     const data = await res.json();
-    console.log("User data: ", data);
 
     if (!res.ok) {
       throw new Error(data.message || `Error fetching user: ${res.status}`);
