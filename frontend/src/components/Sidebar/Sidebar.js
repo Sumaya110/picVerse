@@ -48,17 +48,20 @@ const Sidebar = () => {
 
   return (
     <div className={styles["sidebar-wrapper"]}>
-      <div className={styles.sidebar}>
-        <button className={styles.profileButton} onClick={() => handleHome()}>
+      <div className={styles["sidebar"]}>
+        <button
+          className={styles["profile-button"]}
+          onClick={() => handleHome()}
+        >
           <SidebarLink text="Home" Icon={AiFillHome} notification={null} />
         </button>
 
-        <button className={styles.profileButton}>
+        <button className={styles["profile-button"]}>
           <SidebarLink text="Notifications" Icon={BsBell} notification={null} />
         </button>
 
         <button
-          className={styles.profileButton}
+          className={styles["profile-button"]}
           onClick={() => handleMessage()}
         >
           <SidebarLink
@@ -69,7 +72,7 @@ const Sidebar = () => {
         </button>
 
         <button
-          className={styles.profileButton}
+          className={styles["profile-button"]}
           onClick={() => handleEditProfile()}
         >
           <SidebarLink
@@ -80,21 +83,21 @@ const Sidebar = () => {
         </button>
       </div>
 
-      <button className={styles.tweetButton}>Upload image</button>
+      <button className={styles["upload-image"]}>Upload image</button>
 
-      <div className={styles.signOutDiv} onClick={handleLogout}>
+      <div className={styles["sign-out-div"]} onClick={handleLogout}>
         <img
           src={user?.profilePic || "/default-profile.png"}
           alt="Profile"
-          className={styles.userImage}
+          className={styles["user-image"]}
           width={40}
           height={40}
         />
-        <div className={styles.userDetails}>
+        <div className={styles["user-details"]}>
           <h4>{user?.name}</h4>
           <p>@{user?.username}</p>
         </div>
-        <BsThreeDots className={styles.dotsIcon} />
+        <BsThreeDots className={styles["dots-icon"]} />
       </div>
     </div>
   );

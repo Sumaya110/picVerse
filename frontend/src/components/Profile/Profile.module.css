@@ -1,27 +1,18 @@
 .profile-sidebar-wrapper {
-  margin: 0;
-  padding: 0;
   display: flex;
   justify-content: space-between;
+  gap: 20px;
+  width: 100%;
 }
 
-.profileText {
-  font-size: 16px;
-  color: #333;
-  margin: 5px 0;
-}
-.editButton {
-  margin-top: 15px;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  background: #007bff;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s ease-in-out;
+.fixed,
+.trending-sidebar {
+  flex: 1;
+  position: sticky;
+  top: 0;
+  height: fit-content;
 }
 
-.editButton:hover {
-  background: #0056b3;
+.user-feed {
+  flex: 4;
 }

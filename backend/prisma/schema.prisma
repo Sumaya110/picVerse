@@ -51,5 +51,5 @@ model Like {
   image     Image    @relation(fields: [imageId], references: [id])
   createdAt DateTime @default(now())
 
-  @@unique([userId, imageId]) // Prevent duplicate likes
+  @@unique([userId, imageId])
 }
