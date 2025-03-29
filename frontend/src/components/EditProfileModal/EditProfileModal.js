@@ -6,7 +6,7 @@ import { TbCameraPlus } from "react-icons/tb";
 
 const EditProfileModal = ({ user, onClose, onSave }) => {
   const [username, setUsername] = useState(user.username);
-  const [bio, setBio] = useState(user.bio);
+  const [bio, setBio] = useState(user.bio || "");
   const [profilePic, setProfilePic] = useState(
     user.profilePic || "/default-profile.png"
   );
@@ -14,42 +14,44 @@ const EditProfileModal = ({ user, onClose, onSave }) => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    if (!file) return;
     const reader = new FileReader();
-    if (e.target.files[0]) {
-      reader.readAsDataURL(e.target.files[0]);
+    reader.readAsDataURL(file);
 
-      const i = e.target.files[0];
-      setProfilePic(i);
-    }
     reader.onload = (readerEvent) => {
       setSelectedProPic(readerEvent.target.result);
+      setProfilePic(file);
     };
   };
 
   const handleSave = async () => {
     const formData = new FormData();
 
-    if (profilePic) {
+    if (selectedProPic) {
       formData.append("file", profilePic);
     }
+    let updatedProfilePic = user.profilePic;
 
     try {
-      const response = await fetch("http://localhost:4000/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      const result = await response.json();
-      if (response.ok) {
-        onSave({
-          username,
-          bio,
-          profilePic: result.filePath,
+      if (selectedProPic) {
+        const response = await fetch("http://localhost:4000/api/upload", {
+          method: "POST",
+          body: formData,
         });
-        onClose();
-      } else {
-        console.error(result.error);
+
+        const result = await response.json();
+        if (!response.ok) {
+          console.error(result.error);
+          return;
+        }
+        updatedProfilePic = result?.filePath;
       }
+      onSave({
+        username,
+        bio,
+        profilePic: updatedProfilePic,
+      });
+      onClose();
     } catch (error) {
       console.error("Error during profile update:", error);
     }
@@ -74,21 +76,11 @@ const EditProfileModal = ({ user, onClose, onSave }) => {
             hidden
             onChange={handleImageChange}
           />
-          {selectedProPic ? (
-            <div>
-              <img
-                src={selectedProPic}
-                alt="Profile"
-                className={styles["profile-picture"]}
-              />
-            </div>
-          ) : (
-            <img
-              src={user.profilePic}
-              alt="Profile"
-              className={styles["profile-picture"]}
-            />
-          )}
+          <img
+            src={selectedProPic || user.profilePic}
+            alt="Profile"
+            className={styles["profile-picture"]}
+          />
         </div>
 
         <div className={styles["input-group"]}>
@@ -102,10 +94,7 @@ const EditProfileModal = ({ user, onClose, onSave }) => {
 
         <div className={styles["input-group"]}>
           <label>Bio</label>
-          <textarea
-            value={bio || ""}
-            onChange={(e) => setBio(e.target.value)}
-          />
+          <textarea value={bio} onChange={(e) => setBio(e.target.value)} />
         </div>
 
         <button className={styles["save-button"]} onClick={handleSave}>

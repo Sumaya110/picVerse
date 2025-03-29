@@ -7,8 +7,8 @@ import { AiFillHome, AiOutlineInbox, AiOutlineUser } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { fetchUserById, logoutUser } from "@/services/auth";
 
-const Sidebar = ({ option }) => {
-  const [notificationCount, setNotificationCount] = useState(null);
+const Sidebar = () => {
+  const [notification, setNotification] = useState(null);
   const [user, setUser] = useState(null);
   const router = useRouter();
 
@@ -29,7 +29,17 @@ const Sidebar = ({ option }) => {
     fetchUser();
   }, []);
 
-  const handleNavigation = (path) => router.push(path);
+  const handleEditProfile = async () => {
+    router.push(`/profile/${user?.id}`);
+  };
+
+  const handleHome = async () => {
+    router.push("/home");
+  };
+
+  const handleMessage = async () => {
+    router.push("/messages");
+  };
 
   const handleLogout = () => {
     logoutUser();
@@ -39,23 +49,35 @@ const Sidebar = ({ option }) => {
   return (
     <div className={styles["sidebar-wrapper"]}>
       <div className={styles.sidebar}>
-        <SidebarLink
-          text="Home"
-          Icon={AiFillHome}
-          onClick={() => handleNavigation("/home")}
-        />
-        <SidebarLink text="Notifications" Icon={BsBell} />
-        <SidebarLink
-          text="Messages"
-          Icon={AiOutlineInbox}
-          notification={notificationCount}
-          onClick={() => handleNavigation("/messages")}
-        />
-        <SidebarLink
-          text="Profile"
-          Icon={AiOutlineUser}
-          onClick={() => handleNavigation(`/profileId/${user?.userId}`)}
-        />
+        <button className={styles.profileButton} onClick={() => handleHome()}>
+          <SidebarLink text="Home" Icon={AiFillHome} notification={null} />
+        </button>
+
+        <button className={styles.profileButton}>
+          <SidebarLink text="Notifications" Icon={BsBell} notification={null} />
+        </button>
+
+        <button
+          className={styles.profileButton}
+          onClick={() => handleMessage()}
+        >
+          <SidebarLink
+            text="Messages"
+            Icon={AiOutlineInbox}
+            notification={notification}
+          />
+        </button>
+
+        <button
+          className={styles.profileButton}
+          onClick={() => handleEditProfile()}
+        >
+          <SidebarLink
+            text="Profile"
+            Icon={AiOutlineUser}
+            notification={null}
+          />
+        </button>
       </div>
 
       <button className={styles.tweetButton}>Upload image</button>

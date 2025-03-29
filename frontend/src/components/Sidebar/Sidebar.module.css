@@ -74,6 +74,15 @@
   font-size: 1.5rem;
 }
 
+.profileButton{
+  border: none;
+  border-radius: 30px;
+  margin-bottom: 1.3rem; 
+}
+.profileButton:hover {
+  background-color: lightgray; 
+}
+
 @media (max-width: 768px) {
   .mainDiv {
     width: 80px;
